@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Model.Domains;
 
 namespace Model.Context
 {
-    public class FinalProjectDbContext
+    public class FinalProjectDbContext : DbContext
     {
+        public FinalProjectDbContext(DbContextOptions<FinalProjectDbContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Customer> Customer { get; set; }
     }
 }
