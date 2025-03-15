@@ -1,6 +1,6 @@
 ﻿namespace Model.Domains
 {
-    public class Product : BaseEntity
+    public class Product : EntityBase
     {
         public Product()
         {

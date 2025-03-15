@@ -1,6 +1,6 @@
 ﻿namespace Model.Domains
 {
-    public interface Person : BaseEntity
+    public interface Person : EntityBase
     {
         string FirstName { get; set; }
         string LastName { get; set; }
@@ -9,7 +9,6 @@
             Male = 0,
             Female = 1,
         }
-        string FullName { get; }
         DateTime DateOdBirth { get; set; }
     }
 }

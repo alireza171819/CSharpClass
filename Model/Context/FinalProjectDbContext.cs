@@ -10,8 +10,18 @@ namespace Model.Context
 
         }
 
+        public FinalProjectDbContext()
+        {
+            
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("");
+            base.OnConfiguring(optionsBuilder);
+        }
+
         public DbSet<Product> Product { get; set; }
-        public DbSet<Admin> Admin { get; set; }
         public DbSet<Customer> Customer { get; set; }
     }
 }

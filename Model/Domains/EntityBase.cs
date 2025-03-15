@@ -1,6 +1,6 @@
 ﻿namespace Model.Domains
 {
-    public interface BaseEntity
+    public interface EntityBase
     {
         int Id { get; set; }
         DateTime CreateDate { get; set; }
