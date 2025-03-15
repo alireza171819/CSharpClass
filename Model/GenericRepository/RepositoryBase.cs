@@ -27,8 +27,24 @@ namespace Model.GenericRepository
 
         public void Add(T objModel)
         {
-            _dbContext.Set<T>().Add(objModel);
-            _dbContext.SaveChanges();
+            try
+            {
+                if (objModel is not null)
+                {
+                    _dbContext.Set<T>().Add(objModel);
+                    _dbContext.SaveChanges();
+                }
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+            finally
+            {
+
+            }
+           
         }
 
         public int Count()
@@ -38,7 +54,23 @@ namespace Model.GenericRepository
 
         public T? Get(Expression<Func<T, bool>> predicate)
         {
-            return _dbContext.Set<T>().FirstOrDefault(predicate);
+            try
+            {
+                if (predicate is not null)
+                {
+                    return _dbContext.Set<T>().FirstOrDefault(predicate);
+                }
+                return null;
+            }
+            catch (Exception exp)
+            {
+                return null;
+            }
+            finally
+            {
+
+            }
+            
         }
 
         public IEnumerable<T> GetAll()
@@ -48,42 +80,94 @@ namespace Model.GenericRepository
 
         public T? GetId(int id)
         {
-            return _dbContext.Set<T>().Find(id);
+            try
+            {
+                return _dbContext.Set<T>().Find(id);
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+            finally
+            {
+
+            }
+           
         }
 
         public IEnumerable<T> GetList(Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, string includes = "")
         {
-            IQueryable<T> query = _dbset;
-
-            if (where != null)
+            try
             {
-                query = query.Where(where);
-            }
+                IQueryable<T> query = _dbset;
 
-            if (orderby != null)
-            {
-                query = orderby(query);
-            }
-
-            if (includes != "")
-            {
-                foreach (string include in includes.Split(','))
+                if (where != null)
                 {
-                    query = query.Include(include);
+                    query = query.Where(where);
                 }
-            }
 
-            return query.ToList();
+                if (orderby != null)
+                {
+                    query = orderby(query);
+                }
+
+                if (includes != "")
+                {
+                    foreach (string include in includes.Split(','))
+                    {
+                        query = query.Include(include);
+                    }
+                }
+
+                return query.ToList();
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+            finally
+            {
+
+            }
+           
         }
 
         public void Remove(T objModel)
         {
+            try
+            {
+
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+            finally
+            {
+
+            }
             _dbContext.Set<T>().Remove(objModel);
             _dbContext.SaveChanges();
         }
 
         public void Update(T objModel)
         {
+            try
+            {
+
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+            finally
+            {
+
+            }
             _dbContext.Entry(objModel).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
