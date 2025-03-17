@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Model.Context;
+using Model.Models;
+using static Model.Models.ReturnMethod;
 
 namespace Model.GenericRepository
 {
@@ -9,7 +12,6 @@ namespace Model.GenericRepository
     {
         #region Filds
 
-        protected readonly FinalProjectDbContext _dbContext = new();
         protected readonly DbSet<T> _dbset;
 
         #endregion
@@ -25,75 +27,101 @@ namespace Model.GenericRepository
 
         #region Methods
 
-        public void Add(T objModel)
+        public ReturnTypes Add(T objModel)
         {
-            try
+            using (var context = new FinalProjectDbContext())
             {
-                if (objModel is not null)
+                try
                 {
-                    _dbContext.Set<T>().Add(objModel);
-                    _dbContext.SaveChanges();
+                    if (objModel is not null)
+                    {
+                        context.Set<T>().Add(objModel);
+                        context.SaveChanges();
+                        return ReturnTypes.Success;
+                    }
+                    return ReturnTypes.NullReference;
+                }
+                catch (Exception exp)
+                {
+                    //Log Exception
+                    return ReturnTypes.Error;
+                }
+                finally
+                {
+                    if (context is not null)
+                    {
+                        context.Dispose();
+                    }
                 }
             }
-            catch (Exception exp)
-            {
-
-                throw;
-            }
-            finally
-            {
-
-            }
-           
         }
 
         public int Count()
         {
-            return _dbContext.Set<T>().Count();
+            using (FinalProjectDbContext context = new())
+            {
+                return context.Set<T>().Count();
+            }
         }
 
         public T? Get(Expression<Func<T, bool>> predicate)
         {
-            try
+            using (FinalProjectDbContext context = new())
             {
-                if (predicate is not null)
+                try
                 {
-                    return _dbContext.Set<T>().FirstOrDefault(predicate);
+                    if (predicate is not null)
+                    {
+                        return context.Set<T>().FirstOrDefault(predicate);
+                    }
+                    return null;
                 }
-                return null;
+                catch (Exception exp)
+                {
+                    //Log Exception
+                    return null;
+                }
+                if (context is not null)
+                {
+                    context.Dispose();
+                }
             }
-            catch (Exception exp)
-            {
-                return null;
-            }
-            finally
-            {
-
-            }
-            
         }
 
         public IEnumerable<T> GetAll()
         {
-            return _dbContext.Set<T>().ToList();
+            using (FinalProjectDbContext context = new())
+            {
+                return context.Set<T>().ToList();
+            }
         }
 
         public T? GetId(int id)
         {
-            try
+            using (FinalProjectDbContext context = new())
             {
-                return _dbContext.Set<T>().Find(id);
+                try
+                {
+                    return context.Set<T>().Find(id);
+                }
+                catch (NullReferenceException exp)
+                {
+                    //Log Exception
+                    return null;
+                }
+                catch (Exception exp)
+                {
+                    //Log Exception
+                    return null;
+                }
+                finally
+                {
+                    if (context is not null)
+                    {
+                        context.Dispose();
+                    }
+                }
             }
-            catch (Exception exp)
-            {
-
-                throw;
-            }
-            finally
-            {
-
-            }
-           
         }
 
         public IEnumerable<T> GetList(Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, string includes = "")
@@ -102,17 +130,17 @@ namespace Model.GenericRepository
             {
                 IQueryable<T> query = _dbset;
 
-                if (where != null)
+                if (where is not null)
                 {
                     query = query.Where(where);
                 }
 
-                if (orderby != null)
+                if (orderby is not null)
                 {
                     query = orderby(query);
                 }
 
-                if (includes != "")
+                if (includes is not "")
                 {
                     foreach (string include in includes.Split(','))
                     {
@@ -124,57 +152,60 @@ namespace Model.GenericRepository
             }
             catch (Exception exp)
             {
-
-                throw;
+                //Log Exception
+                return null;
             }
-            finally
-            {
-
-            }
-           
         }
 
-        public void Remove(T objModel)
+        public ReturnTypes Remove(T objModel)
         {
-            try
+            using (FinalProjectDbContext context = new())
             {
-
+                try
+                {
+                    context.Set<T>().Remove(objModel);
+                    context.SaveChanges();
+                    return ReturnTypes.Success;
+                }
+                catch (Exception exp)
+                {
+                    //Log Exception
+                    return ReturnTypes.Error;
+                }
+                finally
+                {
+                    if (context is not null)
+                    {
+                        context.Dispose();
+                    }
+                }
             }
-            catch (Exception exp)
-            {
-
-                throw;
-            }
-            finally
-            {
-
-            }
-            _dbContext.Set<T>().Remove(objModel);
-            _dbContext.SaveChanges();
         }
 
-        public void Update(T objModel)
+        public ReturnTypes Update(T objModel)
         {
-            try
+            using (FinalProjectDbContext context = new())
             {
-
+                try
+                {
+                    context.Entry(objModel).State = EntityState.Modified;
+                    context.SaveChanges();
+                    return ReturnTypes.Success;
+                }
+                catch (Exception exp)
+                {
+                    //Log Exception
+                    return ReturnTypes.Error;
+                }
+                finally
+                {
+                    if (context is not null)
+                    {
+                        context.Dispose();
+                    }
+                }
             }
-            catch (Exception exp)
-            {
 
-                throw;
-            }
-            finally
-            {
-
-            }
-            _dbContext.Entry(objModel).State = EntityState.Modified;
-            _dbContext.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            _dbContext.Dispose();
         }
 
         #endregion

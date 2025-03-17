@@ -17,7 +17,7 @@ namespace Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=myDataBase;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-JAH13IM;Database=FinalProjectDB;Trusted_Connection=True;");
             base.OnConfiguring(optionsBuilder);
         }
 
