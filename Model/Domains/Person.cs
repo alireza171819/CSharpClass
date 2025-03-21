@@ -9,6 +9,6 @@
             Male = 0,
             Female = 1,
         }
-        DateTime DateOdBirth { get; set; }
+        DateTime DateOfBirth { get; set; }
     }
 }

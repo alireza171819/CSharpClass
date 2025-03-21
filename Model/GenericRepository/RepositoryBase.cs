@@ -1,10 +1,8 @@
-﻿using System.Linq;
+﻿using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Model.Context;
-using Model.Models;
-using static Model.Models.ReturnMethod;
+using Model.Dtos;
 
 namespace Model.GenericRepository
 {
@@ -20,14 +18,14 @@ namespace Model.GenericRepository
 
         public RepositoryBase()
         {
-            
+
         }
 
         #endregion
 
         #region Methods
 
-        public ReturnTypes Add(T objModel)
+        public ReturnRepository Add(T objModel)
         {
             using (var context = new FinalProjectDbContext())
             {
@@ -37,14 +35,14 @@ namespace Model.GenericRepository
                     {
                         context.Set<T>().Add(objModel);
                         context.SaveChanges();
-                        return ReturnTypes.Success;
+                        return ReturnRepository.Success;
                     }
-                    return ReturnTypes.NullReference;
+                    return ReturnRepository.NullReference;
                 }
                 catch (Exception exp)
                 {
                     //Log Exception
-                    return ReturnTypes.Error;
+                    return ReturnRepository.Error;
                 }
                 finally
                 {
@@ -81,9 +79,12 @@ namespace Model.GenericRepository
                     //Log Exception
                     return null;
                 }
-                if (context is not null)
+                finally
                 {
-                    context.Dispose();
+                    if (context is not null)
+                    {
+                        context.Dispose();
+                    }
                 }
             }
         }
@@ -107,6 +108,33 @@ namespace Model.GenericRepository
                 catch (NullReferenceException exp)
                 {
                     //Log Exception
+                    return null;
+                }
+                catch (Exception exp)
+                {
+                    //Log Exception
+                    return null;
+                }
+                finally
+                {
+                    if (context is not null)
+                    {
+                        context.Dispose();
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<T> GetList(Expression<Func<T, bool>> where = null)
+        {
+            using (FinalProjectDbContext context = new())
+            {
+                try
+                {
+                    if (where is not null)
+                    {
+                        return context.Set<T>().Where(where).ToList();
+                    }
                     return null;
                 }
                 catch (Exception exp)
@@ -157,7 +185,7 @@ namespace Model.GenericRepository
             }
         }
 
-        public ReturnTypes Remove(T objModel)
+        public ReturnRepository Remove(T objModel)
         {
             using (FinalProjectDbContext context = new())
             {
@@ -165,12 +193,12 @@ namespace Model.GenericRepository
                 {
                     context.Set<T>().Remove(objModel);
                     context.SaveChanges();
-                    return ReturnTypes.Success;
+                    return ReturnRepository.Success;
                 }
                 catch (Exception exp)
                 {
                     //Log Exception
-                    return ReturnTypes.Error;
+                    return ReturnRepository.Error;
                 }
                 finally
                 {
@@ -182,7 +210,7 @@ namespace Model.GenericRepository
             }
         }
 
-        public ReturnTypes Update(T objModel)
+        public ReturnRepository Update(T objModel)
         {
             using (FinalProjectDbContext context = new())
             {
@@ -190,12 +218,12 @@ namespace Model.GenericRepository
                 {
                     context.Entry(objModel).State = EntityState.Modified;
                     context.SaveChanges();
-                    return ReturnTypes.Success;
+                    return ReturnRepository.Success;
                 }
                 catch (Exception exp)
                 {
                     //Log Exception
-                    return ReturnTypes.Error;
+                    return ReturnRepository.Error;
                 }
                 finally
                 {
