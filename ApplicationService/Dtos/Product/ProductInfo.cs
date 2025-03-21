@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ApplicationService.Dtos.Product
+﻿namespace ApplicationService.Dtos.Product
 {
     public class ProductInfo
     {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int Sku { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

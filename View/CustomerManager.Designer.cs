@@ -1,6 +1,6 @@
 ﻿namespace View
 {
-    partial class PersonManager
+    partial class CustomerManager
     {
         /// <summary> 
         /// Required designer variable.
@@ -42,12 +42,12 @@
             // 
             // button1
             // 
-            button1.Font = new Font("IRANYekanXFaNum", 9F);
-            button1.Location = new Point(621, 87);
+            button1.Font = new Font("Segoe UI", 9F);
+            button1.Location = new Point(205, 86);
             button1.Name = "button1";
             button1.Size = new Size(84, 43);
             button1.TabIndex = 0;
-            button1.Text = "ذخیره";
+            button1.Text = "Save";
             button1.UseVisualStyleBackColor = true;
             // 
             // dgvPerson
@@ -62,22 +62,22 @@
             // 
             // button2
             // 
-            button2.Font = new Font("IRANYekanXFaNum", 9F);
-            button2.Location = new Point(531, 87);
+            button2.Font = new Font("Segoe UI", 9F);
+            button2.Location = new Point(115, 86);
             button2.Name = "button2";
             button2.Size = new Size(84, 43);
             button2.TabIndex = 2;
-            button2.Text = "حذف";
+            button2.Text = "Delete";
             button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            button3.Font = new Font("IRANYekanXFaNum", 9F);
-            button3.Location = new Point(441, 87);
+            button3.Font = new Font("Segoe UI", 9F);
+            button3.Location = new Point(25, 86);
             button3.Name = "button3";
             button3.Size = new Size(84, 43);
             button3.TabIndex = 3;
-            button3.Text = "ویرایش";
+            button3.Text = "Update";
             button3.UseVisualStyleBackColor = true;
             // 
             // btnClose
@@ -87,12 +87,13 @@
             btnClose.BackgroundImageLayout = ImageLayout.Zoom;
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("IRANYekanXFaNum", 9F);
-            btnClose.Location = new Point(669, 3);
+            btnClose.ForeColor = Color.Transparent;
+            btnClose.Location = new Point(3, 3);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(58, 43);
             btnClose.TabIndex = 4;
             btnClose.UseVisualStyleBackColor = false;
-            btnClose.Click += this.btnClose_Click;
+            btnClose.Click += btnClose_Click;
             // 
             // btnRefresh
             // 
@@ -100,8 +101,9 @@
             btnRefresh.BackgroundImage = Properties.Resources.Refresh_light_3x;
             btnRefresh.BackgroundImageLayout = ImageLayout.Zoom;
             btnRefresh.FlatStyle = FlatStyle.Flat;
-            btnRefresh.Font = new Font("IRANYekanXFaNum", 9F);
-            btnRefresh.Location = new Point(25, 215);
+            btnRefresh.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRefresh.ForeColor = Color.Transparent;
+            btnRefresh.Location = new Point(647, 212);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(58, 43);
             btnRefresh.TabIndex = 5;
@@ -110,38 +112,38 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("IRANYekanXFaNum DemiBold", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(429, 19);
+            label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(93, 27);
             label1.Name = "label1";
-            label1.Size = new Size(204, 36);
+            label1.Size = new Size(268, 38);
             label1.TabIndex = 6;
-            label1.Text = "مدیریت اشخاص";
+            label1.Text = "Customer Manager";
             // 
             // txtFirstName
             // 
-            txtFirstName.Font = new Font("IRANYekanXFaNum", 10.1999989F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtFirstName.Location = new Point(525, 143);
+            txtFirstName.Font = new Font("Segoe UI", 10.2F);
+            txtFirstName.ForeColor = SystemColors.HotTrack;
+            txtFirstName.Location = new Point(25, 141);
             txtFirstName.MaxLength = 100;
             txtFirstName.Multiline = true;
             txtFirstName.Name = "txtFirstName";
-            txtFirstName.PlaceholderText = "نام ";
-            txtFirstName.RightToLeft = RightToLeft.Yes;
+            txtFirstName.PlaceholderText = "First Name";
             txtFirstName.Size = new Size(180, 32);
             txtFirstName.TabIndex = 7;
             // 
             // txtLastName
             // 
-            txtLastName.Font = new Font("IRANYekanXFaNum", 10.1999989F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtLastName.Location = new Point(525, 181);
+            txtLastName.Font = new Font("Segoe UI", 10.2F);
+            txtLastName.ForeColor = SystemColors.HotTrack;
+            txtLastName.Location = new Point(25, 179);
             txtLastName.MaxLength = 100;
             txtLastName.Multiline = true;
             txtLastName.Name = "txtLastName";
-            txtLastName.PlaceholderText = "نام خانوادگی";
-            txtLastName.RightToLeft = RightToLeft.Yes;
+            txtLastName.PlaceholderText = "Last Name";
             txtLastName.Size = new Size(180, 32);
             txtLastName.TabIndex = 8;
             // 
-            // PersonManager
+            // CustomerManager
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -155,7 +157,7 @@
             Controls.Add(button2);
             Controls.Add(dgvPerson);
             Controls.Add(button1);
-            Name = "PersonManager";
+            Name = "CustomerManager";
             Size = new Size(730, 614);
             ((System.ComponentModel.ISupportInitialize)dgvPerson).EndInit();
             ResumeLayout(false);

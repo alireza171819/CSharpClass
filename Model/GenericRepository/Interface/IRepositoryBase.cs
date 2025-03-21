@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Model.Dtos;
 
-namespace Model.GenericRepository
+namespace Model.GenericRepository.Interface
 {
     public interface IRepositoryBase<T> where T : class
     {

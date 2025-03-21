@@ -28,33 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
             btnProductPage = new Button();
             btnPersonPage = new Button();
             pnlMain = new Panel();
-            panel1.SuspendLayout();
+            pnlMain.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.FromArgb(243, 243, 243);
-            panel1.Controls.Add(btnProductPage);
-            panel1.Controls.Add(btnPersonPage);
-            panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(730, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(180, 603);
-            panel1.TabIndex = 0;
             // 
             // btnProductPage
             // 
             btnProductPage.BackColor = Color.Transparent;
-            btnProductPage.Font = new Font("IRANYekanFN", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProductPage.Location = new Point(0, 153);
+            btnProductPage.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnProductPage.Location = new Point(354, 283);
             btnProductPage.Name = "btnProductPage";
-            btnProductPage.Size = new Size(180, 32);
+            btnProductPage.Size = new Size(180, 75);
             btnProductPage.TabIndex = 2;
-            btnProductPage.Text = "محصولات";
+            btnProductPage.Text = "Products";
             btnProductPage.UseVisualStyleBackColor = false;
             btnProductPage.Click += btnProductPage_Click;
             // 
@@ -62,23 +50,25 @@
             // 
             btnPersonPage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnPersonPage.BackColor = Color.Transparent;
-            btnPersonPage.Font = new Font("IRANYekanFN", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnPersonPage.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnPersonPage.ForeColor = SystemColors.WindowText;
-            btnPersonPage.Location = new Point(0, 115);
+            btnPersonPage.Location = new Point(354, 185);
             btnPersonPage.Name = "btnPersonPage";
-            btnPersonPage.Size = new Size(180, 32);
+            btnPersonPage.Size = new Size(180, 75);
             btnPersonPage.TabIndex = 1;
-            btnPersonPage.Text = "اشخاص";
+            btnPersonPage.Text = "Customer";
             btnPersonPage.UseVisualStyleBackColor = false;
             btnPersonPage.Click += btnPersonPage_Click;
             // 
             // pnlMain
             // 
             pnlMain.BackColor = Color.White;
+            pnlMain.Controls.Add(btnProductPage);
+            pnlMain.Controls.Add(btnPersonPage);
             pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new Size(730, 603);
+            pnlMain.Size = new Size(910, 603);
             pnlMain.TabIndex = 1;
             // 
             // MainForm
@@ -87,18 +77,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(910, 603);
             Controls.Add(pnlMain);
-            Controls.Add(panel1);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
-            Load += this.MainForm_Load;
-            panel1.ResumeLayout(false);
+            Text = "MainForm";
+            Load += MainForm_Load;
+            pnlMain.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Panel panel1;
         private Button btnPersonPage;
         private Button btnProductPage;
         private Panel pnlMain;

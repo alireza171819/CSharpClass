@@ -8,7 +8,7 @@
         public decimal UnitPrice { get; set; }
     }
 
-    public enum CreateReturn
+    public enum CreateResult
     {
         Success,
         Error,

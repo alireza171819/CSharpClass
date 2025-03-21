@@ -1,7 +1,7 @@
 ﻿using Model.Domains;
-using Model.GenericRepository;
 using ApplicationService.Services.Interface;
 using ApplicationService.Dtos.Customer;
+using Model.GenericRepository.Interface;
 
 namespace ApplicationService.Services.Implementation
 {
@@ -9,26 +9,26 @@ namespace ApplicationService.Services.Implementation
     {
         #region Filds
 
-        private readonly IRepositoryBase<Customer> _repositoryCustomer;
+        private readonly IRepositoryBase<Customer> _repository;
 
         #endregion
 
         #region Ctor
 
-        public CustomerService()
+        public CustomerService(IRepositoryBase<Customer> repository)
         {
-            _repositoryCustomer = new RepositoryBase<Customer>();
+            _repository = repository;
         }
 
         #endregion
 
         #region Methods
 
-        public CreateReturn CreteCustomer(CustomerCreate customerCreate)
+        public CreateResult CreteCustomer(CustomerCreate customerCreate)
         {
             if (customerCreate == null)
             {
-                return CreateReturn.NullReference;
+                return CreateResult.NullReference;
             }
             try
             {
@@ -36,13 +36,15 @@ namespace ApplicationService.Services.Implementation
                 customre.FirstName = customerCreate.FirstName;
                 customre.LastName = customerCreate.LastName;
                 customre.DateOfBirth = customerCreate.DateOdBirth;
-                _repositoryCustomer.Add(customre);
-                return CreateReturn.Success;
+                customre.CreateDate = DateTime.Now;
+                customre.UpdateDate = DateTime.Now;
+                _repository.Add(customre);
+                return CreateResult.Success;
             }
             catch (Exception e)
             {
                 //Log Exception
-                return CreateReturn.Error;
+                return CreateResult.Error;
             }
            
         }
@@ -54,7 +56,7 @@ namespace ApplicationService.Services.Implementation
                 return null;
             }
             CustomerInfo customerInfo = new();
-            var customer = _repositoryCustomer.GetId(customerId);
+            var customer = _repository.GetId(customerId);
             if (customer is null)
             {
                 return null;
@@ -65,10 +67,10 @@ namespace ApplicationService.Services.Implementation
             return customerInfo;
         }
 
-        public List<CustomerInfo> GetCustomres()
+        public List<CustomerInfo> GetCustomreList()
         {
             var customresInfo = new List<CustomerInfo>();
-            var customers = _repositoryCustomer.GetList(c => c.IsDeleted == false);
+            var customers = _repository.GetList(c => c.IsDeleted == false);
             if (customers == null)
             {
                 return null;
@@ -84,50 +86,56 @@ namespace ApplicationService.Services.Implementation
             return customresInfo;
         }
 
-        public RemoveReturn RemoveCustomer(CustomerRemove customerRemove)
+        public RemoveResult RemoveCustomer(CustomerRemove customerRemove)
         {
+            if (customerRemove == null)
+            {
+                return RemoveResult.NullReference;
+            }
             try
             {
-                var customer = _repositoryCustomer.GetId(customerRemove.Id);
+                var customer = _repository.GetId(customerRemove.Id);
                 if (customer == null)
                 {
-                    return RemoveReturn.NotFound;
+                    return RemoveResult.NotFound;
                 }
                 customer.UpdateDate = DateTime.Now;
                 customer.IsDeleted = true;
-                _repositoryCustomer.Update(customer);
-                return RemoveReturn.Success;
+                _repository.Update(customer);
+                return RemoveResult.Success;
             }
             catch (Exception exp)
             {
                 //Log Exception
-                return RemoveReturn.Error;
+                return RemoveResult.Error;
             }
         }
 
-        public UpdateReturn UpdateCustomer(CustomerUpdate customerUpdate)
+        public UpdateResult UpdateCustomer(CustomerUpdate customerUpdate)
         {
+            if (customerUpdate == null)
+            {
+                return UpdateResult.NullReference;
+            }
             try
             {
-                var customer = _repositoryCustomer.GetId(customerUpdate.Id);
+                var customer = _repository.GetId(customerUpdate.Id);
                 if (customer == null)
                 {
-                    return UpdateReturn.NotFound;
+                    return UpdateResult.NotFound;
                 }
                 customer.UpdateDate = DateTime.Now;
-                customer.IsDeleted = customerUpdate.IsDeleted;
                 customer.FirstName = customerUpdate.FirstName;
                 customer.LastName = customerUpdate.LastName;
                 customer.DateOfBirth = customerUpdate.DateOfBirth;
-                _repositoryCustomer.Update(customer);
-                return UpdateReturn.Success;
+                _repository.Update(customer);
+                return UpdateResult.Success;
             }
             catch (Exception exp)
             {
                 //Log Exception
-                return UpdateReturn.Error;
+                return UpdateResult.Error;
             }
-           
         }
         #endregion
     }

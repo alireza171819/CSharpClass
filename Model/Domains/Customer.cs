@@ -2,12 +2,6 @@
 {
     public class Customer : Person
     {
-        public Customer()
-        {
-            CreateDate = DateTime.Now;
-            UpdateDate = DateTime.Now;
-            IsDeleted = false;
-        }
         public int Id { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

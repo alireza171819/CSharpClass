@@ -1,6 +1,6 @@
-﻿namespace ApplicationService.Dtos.Customer
+﻿namespace ApplicationService.Dtos.Product
 {
-    public class CustomerRemove
+    public class ProductRemove
     {
         public int Id { get; set; }
     }

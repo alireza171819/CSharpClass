@@ -2,14 +2,14 @@
 {
     public class ProductUpdate
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Sku { get; set; }
         public decimal UnitPrice { get; set; }
-        public bool  IsDelete { get; set; }
     }
 
-    public enum UpdateReturn
+    public enum UpdateResult
     {
         Success,
         Error,

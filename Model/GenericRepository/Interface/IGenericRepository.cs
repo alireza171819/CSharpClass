@@ -1,4 +1,4 @@
-﻿namespace Model.GenericRepository
+﻿namespace Model.GenericRepository.Interface
 {
     public interface IGenericRepository<T> where T : class
     {

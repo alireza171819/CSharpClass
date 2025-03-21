@@ -1,8 +1,8 @@
 ﻿namespace View
 {
-    public partial class PersonManager : UserControl
+    public partial class CustomerManager : UserControl
     {
-        public PersonManager()
+        public CustomerManager()
         {
             InitializeComponent();
         }

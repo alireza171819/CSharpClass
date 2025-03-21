@@ -8,7 +8,7 @@
         
     }
 
-    public enum CreateReturn
+    public enum CreateResult
     {
         Success,
         Error,

@@ -3,8 +3,9 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Model.Context;
 using Model.Dtos;
+using Model.GenericRepository.Interface;
 
-namespace Model.GenericRepository
+namespace Model.GenericRepository.Implementation
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

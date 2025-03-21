@@ -9,7 +9,7 @@
         public DateTime DateOfBirth { get; set; }
     }
 
-    public enum UpdateReturn
+    public enum UpdateResult
     {
         Success,
         Error,
