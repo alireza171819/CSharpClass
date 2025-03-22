@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             button1 = new Button();
-            dgvPerson = new DataGridView();
+            dgvCustomers = new DataGridView();
             button2 = new Button();
             button3 = new Button();
             btnClose = new Button();
@@ -37,7 +37,11 @@
             label1 = new Label();
             txtFirstName = new TextBox();
             txtLastName = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)dgvPerson).BeginInit();
+            txtDateOfBirth = new TextBox();
+            Id = new DataGridViewTextBoxColumn();
+            FullName = new DataGridViewTextBoxColumn();
+            DateOfBirth = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -50,15 +54,21 @@
             button1.Text = "Save";
             button1.UseVisualStyleBackColor = true;
             // 
-            // dgvPerson
+            // dgvCustomers
             // 
-            dgvPerson.BackgroundColor = Color.White;
-            dgvPerson.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPerson.Location = new Point(25, 257);
-            dgvPerson.Name = "dgvPerson";
-            dgvPerson.RowHeadersWidth = 51;
-            dgvPerson.Size = new Size(680, 319);
-            dgvPerson.TabIndex = 1;
+            dgvCustomers.BackgroundColor = Color.White;
+            dgvCustomers.BorderStyle = BorderStyle.None;
+            dgvCustomers.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dgvCustomers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
+            dgvCustomers.ColumnHeadersHeight = 32;
+            dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { Id, FullName, DateOfBirth });
+            dgvCustomers.Location = new Point(25, 257);
+            dgvCustomers.Name = "dgvCustomers";
+            dgvCustomers.RowHeadersVisible = false;
+            dgvCustomers.RowHeadersWidth = 51;
+            dgvCustomers.Size = new Size(680, 319);
+            dgvCustomers.TabIndex = 1;
+            dgvCustomers.SelectionChanged += dgvCustomers_SelectionChanged;
             // 
             // button2
             // 
@@ -88,9 +98,9 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("IRANYekanXFaNum", 9F);
             btnClose.ForeColor = Color.Transparent;
-            btnClose.Location = new Point(3, 3);
+            btnClose.Location = new Point(11, 11);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(58, 43);
+            btnClose.Size = new Size(48, 43);
             btnClose.TabIndex = 4;
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
@@ -103,11 +113,12 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnRefresh.ForeColor = Color.Transparent;
-            btnRefresh.Location = new Point(647, 212);
+            btnRefresh.Location = new Point(662, 212);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(58, 43);
+            btnRefresh.Size = new Size(43, 43);
             btnRefresh.TabIndex = 5;
             btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // label1
             // 
@@ -122,7 +133,7 @@
             // txtFirstName
             // 
             txtFirstName.Font = new Font("Segoe UI", 10.2F);
-            txtFirstName.ForeColor = SystemColors.HotTrack;
+            txtFirstName.ForeColor = SystemColors.ControlText;
             txtFirstName.Location = new Point(25, 141);
             txtFirstName.MaxLength = 100;
             txtFirstName.Multiline = true;
@@ -134,7 +145,7 @@
             // txtLastName
             // 
             txtLastName.Font = new Font("Segoe UI", 10.2F);
-            txtLastName.ForeColor = SystemColors.HotTrack;
+            txtLastName.ForeColor = SystemColors.ControlText;
             txtLastName.Location = new Point(25, 179);
             txtLastName.MaxLength = 100;
             txtLastName.Multiline = true;
@@ -143,11 +154,45 @@
             txtLastName.Size = new Size(180, 32);
             txtLastName.TabIndex = 8;
             // 
+            // txtDateOfBirth
+            // 
+            txtDateOfBirth.Font = new Font("Segoe UI", 10.2F);
+            txtDateOfBirth.ForeColor = SystemColors.ControlText;
+            txtDateOfBirth.Location = new Point(229, 141);
+            txtDateOfBirth.MaxLength = 100;
+            txtDateOfBirth.Multiline = true;
+            txtDateOfBirth.Name = "txtDateOfBirth";
+            txtDateOfBirth.PlaceholderText = "Date Of Birth";
+            txtDateOfBirth.Size = new Size(180, 32);
+            txtDateOfBirth.TabIndex = 9;
+            // 
+            // Id
+            // 
+            Id.HeaderText = "Id";
+            Id.MinimumWidth = 6;
+            Id.Name = "Id";
+            Id.Visible = false;
+            // 
+            // FullName
+            // 
+            FullName.HeaderText = "FullName";
+            FullName.MinimumWidth = 6;
+            FullName.Name = "FullName";
+            FullName.Width = 300;
+            // 
+            // DateOfBirth
+            // 
+            DateOfBirth.HeaderText = "Date Of Birth";
+            DateOfBirth.MinimumWidth = 6;
+            DateOfBirth.Name = "DateOfBirth";
+            DateOfBirth.Width = 380;
+            // 
             // CustomerManager
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(txtDateOfBirth);
             Controls.Add(txtLastName);
             Controls.Add(txtFirstName);
             Controls.Add(label1);
@@ -155,11 +200,11 @@
             Controls.Add(btnClose);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(dgvPerson);
+            Controls.Add(dgvCustomers);
             Controls.Add(button1);
             Name = "CustomerManager";
             Size = new Size(730, 614);
-            ((System.ComponentModel.ISupportInitialize)dgvPerson).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -167,7 +212,7 @@
         #endregion
 
         private Button button1;
-        private DataGridView dgvPerson;
+        private DataGridView dgvCustomers;
         private Button button2;
         private Button button3;
         private Button btnClose;
@@ -175,5 +220,9 @@
         private Label label1;
         private TextBox txtFirstName;
         private TextBox txtLastName;
+        private TextBox txtDateOfBirth;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn FullName;
+        private DataGridViewTextBoxColumn DateOfBirth;
     }
 }

@@ -35,7 +35,7 @@ namespace ApplicationService.Services.Implementation
                 Customer customre = new();
                 customre.FirstName = customerCreate.FirstName;
                 customre.LastName = customerCreate.LastName;
-                customre.DateOfBirth = customerCreate.DateOdBirth;
+                customre.DateOfBirth = customerCreate.DateOfBirth;
                 customre.CreateDate = DateTime.Now;
                 customre.UpdateDate = DateTime.Now;
                 _repository.Add(customre);

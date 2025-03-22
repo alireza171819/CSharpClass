@@ -163,3 +163,4 @@ C:\Users\Minipc\Source\Repos\CSharpClass\View\obj\Debug\net9.0-windows\refint\Vi
 C:\Users\Minipc\Source\Repos\CSharpClass\View\obj\Debug\net9.0-windows\View.pdb
 C:\Users\Minipc\Source\Repos\CSharpClass\View\obj\Debug\net9.0-windows\View.genruntimeconfig.cache
 C:\Users\Minipc\Source\Repos\CSharpClass\View\obj\Debug\net9.0-windows\ref\View.dll
+C:\Users\Minipc\Source\Repos\CSharpClass\View\bin\Debug\net9.0-windows\Ninject.dll

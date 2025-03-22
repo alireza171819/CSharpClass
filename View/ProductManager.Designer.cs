@@ -28,41 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtLastName = new TextBox();
-            txtFirstName = new TextBox();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            txtDescription = new TextBox();
+            txtTitel = new TextBox();
             label1 = new Label();
             btnRefresh = new Button();
             btnClose = new Button();
-            button3 = new Button();
-            button2 = new Button();
-            dgvPerson = new DataGridView();
-            button1 = new Button();
+            btnUpdate = new Button();
+            btnDelete = new Button();
+            dgvProducts = new DataGridView();
+            Id = new DataGridViewTextBoxColumn();
+            Titel = new DataGridViewTextBoxColumn();
+            Description = new DataGridViewTextBoxColumn();
+            Sku = new DataGridViewTextBoxColumn();
+            UnitPrice = new DataGridViewTextBoxColumn();
+            btnSave = new Button();
             txtUnitPrice = new TextBox();
             txtSku = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)dgvPerson).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             SuspendLayout();
             // 
-            // txtLastName
+            // txtDescription
             // 
-            txtLastName.Font = new Font("Segoe UI", 10.2F);
-            txtLastName.Location = new Point(51, 194);
-            txtLastName.MaxLength = 100;
-            txtLastName.Multiline = true;
-            txtLastName.Name = "txtLastName";
-            txtLastName.PlaceholderText = "Description";
-            txtLastName.Size = new Size(180, 32);
-            txtLastName.TabIndex = 2;
+            txtDescription.Font = new Font("Segoe UI", 10.2F);
+            txtDescription.Location = new Point(51, 194);
+            txtDescription.MaxLength = 100;
+            txtDescription.Multiline = true;
+            txtDescription.Name = "txtDescription";
+            txtDescription.PlaceholderText = "Description";
+            txtDescription.Size = new Size(180, 32);
+            txtDescription.TabIndex = 2;
             // 
-            // txtFirstName
+            // txtTitel
             // 
-            txtFirstName.Font = new Font("Segoe UI", 10.2F);
-            txtFirstName.Location = new Point(51, 156);
-            txtFirstName.MaxLength = 100;
-            txtFirstName.Multiline = true;
-            txtFirstName.Name = "txtFirstName";
-            txtFirstName.PlaceholderText = "Titel";
-            txtFirstName.Size = new Size(180, 32);
-            txtFirstName.TabIndex = 1;
+            txtTitel.Font = new Font("Segoe UI", 10.2F);
+            txtTitel.Location = new Point(51, 156);
+            txtTitel.MaxLength = 100;
+            txtTitel.Multiline = true;
+            txtTitel.Name = "txtTitel";
+            txtTitel.PlaceholderText = "Titel";
+            txtTitel.Size = new Size(180, 32);
+            txtTitel.TabIndex = 1;
             // 
             // label1
             // 
@@ -82,11 +89,12 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("IRANYekanXFaNum", 9F);
             btnRefresh.ForeColor = Color.Transparent;
-            btnRefresh.Location = new Point(636, 230);
+            btnRefresh.Location = new Point(648, 230);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(58, 43);
+            btnRefresh.Size = new Size(46, 43);
             btnRefresh.TabIndex = 6;
             btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // btnClose
             // 
@@ -96,52 +104,129 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("IRANYekanXFaNum", 9F);
             btnClose.ForeColor = Color.Transparent;
-            btnClose.Location = new Point(3, 3);
+            btnClose.Location = new Point(11, 11);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(58, 43);
+            btnClose.Size = new Size(48, 43);
             btnClose.TabIndex = 9;
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 
-            // button3
+            // btnUpdate
             // 
-            button3.Font = new Font("Segoe UI", 9F);
-            button3.Location = new Point(51, 100);
-            button3.Name = "button3";
-            button3.Size = new Size(84, 43);
-            button3.TabIndex = 8;
-            button3.Text = "Update";
-            button3.UseVisualStyleBackColor = true;
+            btnUpdate.Font = new Font("Segoe UI", 9F);
+            btnUpdate.Location = new Point(51, 100);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(84, 43);
+            btnUpdate.TabIndex = 8;
+            btnUpdate.Text = "Update";
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
-            // button2
+            // btnDelete
             // 
-            button2.Font = new Font("Segoe UI", 9F);
-            button2.Location = new Point(141, 100);
-            button2.Name = "button2";
-            button2.Size = new Size(84, 43);
-            button2.TabIndex = 7;
-            button2.Text = "Delete";
-            button2.UseVisualStyleBackColor = true;
+            btnDelete.Font = new Font("Segoe UI", 9F);
+            btnDelete.Location = new Point(141, 100);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(84, 43);
+            btnDelete.TabIndex = 7;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
-            // dgvPerson
+            // dgvProducts
             // 
-            dgvPerson.BackgroundColor = Color.White;
-            dgvPerson.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPerson.Location = new Point(14, 275);
-            dgvPerson.Name = "dgvPerson";
-            dgvPerson.RowHeadersWidth = 51;
-            dgvPerson.Size = new Size(680, 319);
-            dgvPerson.TabIndex = 10;
+            dgvProducts.AllowUserToAddRows = false;
+            dgvProducts.AllowUserToDeleteRows = false;
+            dgvProducts.AllowUserToOrderColumns = true;
+            dgvProducts.AllowUserToResizeColumns = false;
+            dgvProducts.AllowUserToResizeRows = false;
+            dgvProducts.BackgroundColor = Color.White;
+            dgvProducts.BorderStyle = BorderStyle.None;
+            dgvProducts.CellBorderStyle = DataGridViewCellBorderStyle.Sunken;
+            dgvProducts.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
+            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProducts.Columns.AddRange(new DataGridViewColumn[] { Id, Titel, Description, Sku, UnitPrice });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.DodgerBlue;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvProducts.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvProducts.Location = new Point(14, 275);
+            dgvProducts.MultiSelect = false;
+            dgvProducts.Name = "dgvProducts";
+            dgvProducts.ReadOnly = true;
+            dgvProducts.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.DeepSkyBlue;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvProducts.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvProducts.RowHeadersVisible = false;
+            dgvProducts.RowHeadersWidth = 51;
+            dgvProducts.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvProducts.ScrollBars = ScrollBars.Vertical;
+            dgvProducts.Size = new Size(680, 319);
+            dgvProducts.TabIndex = 10;
+            dgvProducts.SelectionChanged += dgvProducts_SelectionChanged;
             // 
-            // button1
+            // Id
             // 
-            button1.Font = new Font("Segoe UI", 9F);
-            button1.Location = new Point(231, 100);
-            button1.Name = "button1";
-            button1.Size = new Size(84, 43);
-            button1.TabIndex = 5;
-            button1.Text = "Save";
-            button1.UseVisualStyleBackColor = true;
+            Id.HeaderText = "Id";
+            Id.MinimumWidth = 6;
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            Id.Width = 125;
+            // 
+            // Titel
+            // 
+            Titel.HeaderText = "Titel";
+            Titel.MinimumWidth = 6;
+            Titel.Name = "Titel";
+            Titel.ReadOnly = true;
+            Titel.Width = 150;
+            // 
+            // Description
+            // 
+            Description.FillWeight = 200F;
+            Description.HeaderText = "Description";
+            Description.MinimumWidth = 6;
+            Description.Name = "Description";
+            Description.ReadOnly = true;
+            Description.Width = 200;
+            // 
+            // Sku
+            // 
+            Sku.HeaderText = "Sku";
+            Sku.MinimumWidth = 6;
+            Sku.Name = "Sku";
+            Sku.ReadOnly = true;
+            Sku.Width = 125;
+            // 
+            // UnitPrice
+            // 
+            UnitPrice.HeaderText = "UnitPrice";
+            UnitPrice.MinimumWidth = 6;
+            UnitPrice.Name = "UnitPrice";
+            UnitPrice.ReadOnly = true;
+            UnitPrice.Width = 200;
+            // 
+            // btnSave
+            // 
+            btnSave.Font = new Font("Segoe UI", 9F);
+            btnSave.Location = new Point(231, 100);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(84, 43);
+            btnSave.TabIndex = 5;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // txtUnitPrice
             // 
@@ -153,6 +238,8 @@
             txtUnitPrice.PlaceholderText = "UnitPrice";
             txtUnitPrice.Size = new Size(180, 32);
             txtUnitPrice.TabIndex = 4;
+            txtUnitPrice.TextChanged += txtUnitPrice_TextChanged;
+            txtUnitPrice.KeyPress += txtUnitPrice_KeyPress;
             // 
             // txtSku
             // 
@@ -173,34 +260,40 @@
             BackColor = Color.White;
             Controls.Add(txtUnitPrice);
             Controls.Add(txtSku);
-            Controls.Add(txtLastName);
-            Controls.Add(txtFirstName);
+            Controls.Add(txtDescription);
+            Controls.Add(txtTitel);
             Controls.Add(label1);
             Controls.Add(btnRefresh);
             Controls.Add(btnClose);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(dgvPerson);
-            Controls.Add(button1);
+            Controls.Add(btnUpdate);
+            Controls.Add(btnDelete);
+            Controls.Add(dgvProducts);
+            Controls.Add(btnSave);
             Name = "ProductManager";
             Size = new Size(730, 614);
-            ((System.ComponentModel.ISupportInitialize)dgvPerson).EndInit();
+            Load += ProductManager_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox txtLastName;
-        private TextBox txtFirstName;
+        private TextBox txtDescription;
+        private TextBox txtTitel;
         private Label label1;
         private Button btnRefresh;
         private Button btnClose;
-        private Button button3;
-        private Button button2;
-        private DataGridView dgvPerson;
-        private Button button1;
+        private Button btnUpdate;
+        private Button btnDelete;
+        private DataGridView dgvProducts;
+        private Button btnSave;
         private TextBox txtUnitPrice;
         private TextBox txtSku;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn Titel;
+        private DataGridViewTextBoxColumn Description;
+        private DataGridViewTextBoxColumn Sku;
+        private DataGridViewTextBoxColumn UnitPrice;
     }
 }

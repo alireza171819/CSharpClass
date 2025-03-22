@@ -87,6 +87,7 @@ namespace ApplicationService.Services.Implementation
                 foreach (var product in products)
                 {
                     var productInfo = new ProductInfo();
+                    productInfo.Id = product.Id;
                     productInfo.Title = product.Title;
                     productInfo.Description = product.Description;
                     productInfo.Sku = product.Sku;
@@ -114,7 +115,7 @@ namespace ApplicationService.Services.Implementation
                 {
                     return RemoveResult.NotFound;
                 }
-                product.IsDeleted = false;
+                product.IsDeleted = true;
                 product.UpdateDate = DateTime.Now;
                 _repository.Update(product);
                 return RemoveResult.Success;

@@ -226,6 +226,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "Ninject": {
+              "target": "Package",
+              "version": "[3.3.6, )"
             }
           },
           "imports": [

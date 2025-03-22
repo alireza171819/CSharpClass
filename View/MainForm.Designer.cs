@@ -38,7 +38,7 @@
             // 
             btnProductPage.BackColor = Color.Transparent;
             btnProductPage.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            btnProductPage.Location = new Point(354, 283);
+            btnProductPage.Location = new Point(287, 290);
             btnProductPage.Name = "btnProductPage";
             btnProductPage.Size = new Size(180, 75);
             btnProductPage.TabIndex = 2;
@@ -52,7 +52,7 @@
             btnPersonPage.BackColor = Color.Transparent;
             btnPersonPage.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             btnPersonPage.ForeColor = SystemColors.WindowText;
-            btnPersonPage.Location = new Point(354, 185);
+            btnPersonPage.Location = new Point(287, 197);
             btnPersonPage.Name = "btnPersonPage";
             btnPersonPage.Size = new Size(180, 75);
             btnPersonPage.TabIndex = 1;
@@ -68,14 +68,14 @@
             pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new Size(910, 603);
+            pnlMain.Size = new Size(781, 603);
             pnlMain.TabIndex = 1;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(910, 603);
+            ClientSize = new Size(781, 603);
             Controls.Add(pnlMain);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
