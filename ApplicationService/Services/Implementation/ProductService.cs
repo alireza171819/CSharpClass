@@ -1,6 +1,7 @@
 ﻿using ApplicationService.Dtos.Product;
 using ApplicationService.Services.Interface;
 using Model.Domains;
+using Model.Dtos;
 using Model.GenericRepository.Interface;
 
 namespace ApplicationService.Services.Implementation
@@ -39,7 +40,16 @@ namespace ApplicationService.Services.Implementation
                 product.Sku = productCreate.Sku;
                 product.UnitPrice = productCreate.UnitPrice;
                 product.UpdateDate = DateTime.Now;
-                _repository.Add(product);
+                var result = _repository.Add(product);
+                switch (result)
+                {
+                    case ReturnRepository.Success:
+                        return CreateResult.Success;
+                    case ReturnRepository.Error:
+                        return CreateResult.Error;
+                    case ReturnRepository.NullReference:
+                        return CreateResult.NullReference;
+                }
                 return CreateResult.Success;
             }
             catch (Exception e)
@@ -117,7 +127,18 @@ namespace ApplicationService.Services.Implementation
                 }
                 product.IsDeleted = true;
                 product.UpdateDate = DateTime.Now;
-                _repository.Update(product);
+                var result = _repository.Update(product);
+                switch (result)
+                {
+                    case ReturnRepository.Success:
+                        return RemoveResult.Success;
+                    case ReturnRepository.Error:
+                        return RemoveResult.Error;
+                    case ReturnRepository.NullReference:
+                        return RemoveResult.NullReference;
+                    case ReturnRepository.NotFound:
+                        return RemoveResult.NotFound;
+                }
                 return RemoveResult.Success;
             }
             catch (Exception e)
@@ -144,7 +165,18 @@ namespace ApplicationService.Services.Implementation
                 product.Description = productUpdate.Description;
                 product.Sku = productUpdate.Sku;
                 product.UnitPrice = productUpdate.UnitPrice;
-                _repository.Update(product);
+                var result = _repository.Update(product);
+                switch (result)
+                {
+                    case ReturnRepository.Success:
+                        return UpdateResult.Success;
+                    case ReturnRepository.Error:
+                        return UpdateResult.Error;
+                    case ReturnRepository.NullReference:
+                        return UpdateResult.NullReference;
+                    case ReturnRepository.NotFound:
+                        return UpdateResult.NotFound;
+                }
                 return UpdateResult.Success;
             }
             catch (Exception e)

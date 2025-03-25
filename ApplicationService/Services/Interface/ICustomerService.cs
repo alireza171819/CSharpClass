@@ -4,7 +4,7 @@ namespace ApplicationService.Services.Interface
 {
     public interface ICustomerService
     {
-        CreateResult CreteCustomer(CustomerCreate customer);
+        CreateResult CreateCustomer(CustomerCreate customer);
         UpdateResult UpdateCustomer(CustomerUpdate customer);
         CustomerInfo GetCustomer(int customerId);
         List<CustomerInfo> GetCustomreList();

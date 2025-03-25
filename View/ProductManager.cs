@@ -1,6 +1,5 @@
 ﻿using ApplicationService.Dtos.Product;
 using ApplicationService.Services.Interface;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace View
 {
@@ -11,6 +10,7 @@ namespace View
         private readonly IProductService _productService;
         private int _productId;
         private int _rowIndex;
+        private bool _update;
 
         #endregion
 
@@ -62,9 +62,9 @@ namespace View
                 return null;
             }
 
-            if (!string.IsNullOrEmpty(txtSku.Text))
+            if (!string.IsNullOrEmpty(txtUnitPrice.Text))
             {
-                productCreate.UnitPrice = Convert.ToInt32(txtUnitPrice.Text);
+                productCreate.UnitPrice = Convert.ToInt32(txtUnitPrice.Text.Replace(",",""));
             }
             else
             {
@@ -77,10 +77,10 @@ namespace View
 
         private void Clear()
         {
-            txtTitel.Text = string.Empty;
-            txtDescription.Text = string.Empty;
-            txtSku.Text = string.Empty;
-            txtUnitPrice.Text = string.Empty;
+            txtTitel.Clear();
+            txtDescription.Clear();
+            txtSku.Clear();
+            txtUnitPrice.Clear();
             RefreshDgv();
             txtTitel.Focus();
         }
@@ -91,14 +91,14 @@ namespace View
             {
                 try
                 {
-                    return Convert.ToInt32(input.Replace(",", "")).ToString("#,#");
+                    return Convert.ToDecimal(input.Replace(",", "")).ToString("#,#");
                 }
-                catch (Exception)
+                catch (Exception exp)
                 {
                     return null;
                 }
             }
-            return "0";
+            return null;
         }
 
         private void DigitFilter(object sender, KeyPressEventArgs e)
@@ -115,25 +115,57 @@ namespace View
             }
         }
 
-        private void Create()
+        private void Save()
         {
             var product = GetParametrs();
             if (product is null)
             {
                 return;
             }
-            var result = _productService.CreateProduct(product);
-            switch (result)
+            //Update Product
+            if (_update)
             {
-                case CreateResult.Success:
-                    MessageBox.Show("Success", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    break;
-                case CreateResult.Error:
-                    MessageBox.Show("Erorr", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                case CreateResult.NullReference:
-                    MessageBox.Show("Null", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
+                ProductUpdate productUpdate = new();
+                productUpdate.Title = product.Title;
+                productUpdate.Description = product.Description;
+                productUpdate.Id = _productId;
+                productUpdate.Sku = product.Sku;
+                productUpdate.UnitPrice = product.UnitPrice;
+                var result = _productService.UpdateProduct(productUpdate);
+                switch (result)
+                {
+                    case UpdateResult.Success:
+                        MessageBox.Show("Success", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        break;
+                    case UpdateResult.Error:
+                        MessageBox.Show("Erorr", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                    case UpdateResult.NullReference:
+                        MessageBox.Show("Null", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    case UpdateResult.NotFound:
+                        MessageBox.Show("Null", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                }
+                _update = false;
+                btnUpdate.Enabled = true;
+            }
+            //Create Product
+            else
+            {
+                var result = _productService.CreateProduct(product);
+                switch (result)
+                {
+                    case CreateResult.Success:
+                        MessageBox.Show("Success", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        break;
+                    case CreateResult.Error:
+                        MessageBox.Show("Erorr", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                    case CreateResult.NullReference:
+                        MessageBox.Show("Null", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                }
             }
             Clear();
         }
@@ -145,34 +177,14 @@ namespace View
                 MessageBox.Show("Pleas select a row !", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var productInfo = GetParametrs();
-            if (productInfo is null)
-            {
-                return;
-            }
-            ProductUpdate productUpdate = new();
-            productUpdate.Title = productInfo.Title;
-            productUpdate.Description = productInfo.Description;
-            productUpdate.Id = _productId;
-            productUpdate.Sku = productInfo.Sku;
-            productUpdate.UnitPrice = productInfo.UnitPrice;
-            var result = _productService.UpdateProduct(productUpdate);
-            switch (result)
-            {
-                case UpdateResult.Success:
-                    MessageBox.Show("Success", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    break;
-                case UpdateResult.Error:
-                    MessageBox.Show("Erorr", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                case UpdateResult.NullReference:
-                    MessageBox.Show("Null", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                case UpdateResult.NotFound:
-                    MessageBox.Show("Null", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    break;
-            }
-            Clear();
+            _update = true;
+            btnUpdate.Enabled = false;
+            var productInfo = _productService.GetProduct(_productId);
+            txtTitel.Text = productInfo.Title;
+            txtDescription.Text = productInfo.Description;
+            txtSku.Text = productInfo.Sku.ToString();
+            txtUnitPrice.Text = productInfo.UnitPrice.ToString();
+            txtTitel.Focus();
         }
 
         private void Delete()
@@ -206,10 +218,13 @@ namespace View
         private void RefreshDgv()
         {
             dgvProducts.Rows.Clear();
-            var productsInfo = _productService.GetProductList();
-            foreach (var item in productsInfo)
+            var productsList = _productService.GetProductList();
+            if (productsList is not null)
             {
-                dgvProducts.Rows.Add(item.Id, item.Title, item.Description, item.Sku, item.UnitPrice);
+                foreach (var item in productsList)
+                {
+                    dgvProducts.Rows.Add(item.Id, item.Title, item.Description, item.Sku, item.UnitPrice);
+                }
             }
         }
         #endregion
@@ -223,14 +238,12 @@ namespace View
 
         private void ProductManager_Load(object sender, EventArgs e)
         {
-            RefreshDgv();
-            txtTitel.Focus();
+            Clear();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Create();
-            txtTitel.Focus();
+            Save();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -250,14 +263,20 @@ namespace View
 
         private void dgvProducts_SelectionChanged(object sender, EventArgs e)
         {
-            _rowIndex = dgvProducts.CurrentRow.Index;
-            _productId = (int)dgvProducts.Rows[_rowIndex].Cells["Id"].Value;
+            if (dgvProducts.RowCount > 1)
+            {
+                _rowIndex = dgvProducts.CurrentRow.Index;
+                _productId = (int)dgvProducts.Rows[_rowIndex].Cells[0].Value;
+            }
         }
 
         private void txtUnitPrice_TextChanged(object sender, EventArgs e)
         {
-            txtUnitPrice.Text = ThreeDigitSeparator(txtUnitPrice.Text);
-            txtUnitPrice.SelectionStart = txtUnitPrice.Text.Length;
+            if (!string.IsNullOrEmpty(txtUnitPrice.Text))
+            {
+                txtUnitPrice.Text = ThreeDigitSeparator(txtUnitPrice.Text);
+                txtUnitPrice.SelectionStart = txtUnitPrice.Text.Length;
+            }
         }
 
         private void txtUnitPrice_KeyPress(object sender, KeyPressEventArgs e)
@@ -265,6 +284,11 @@ namespace View
             DigitFilter(sender, e);
         }
 
+        private void txtSku_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            DigitFilter(sender, e);
+        }
         #endregion
+
     }
 }

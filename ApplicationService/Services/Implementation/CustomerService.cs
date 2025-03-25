@@ -1,6 +1,7 @@
 ﻿using Model.Domains;
 using ApplicationService.Services.Interface;
 using ApplicationService.Dtos.Customer;
+using Model.Dtos;
 using Model.GenericRepository.Interface;
 
 namespace ApplicationService.Services.Implementation
@@ -24,7 +25,7 @@ namespace ApplicationService.Services.Implementation
 
         #region Methods
 
-        public CreateResult CreteCustomer(CustomerCreate customerCreate)
+        public CreateResult CreateCustomer(CustomerCreate customerCreate)
         {
             if (customerCreate == null)
             {
@@ -38,7 +39,17 @@ namespace ApplicationService.Services.Implementation
                 customre.DateOfBirth = customerCreate.DateOfBirth;
                 customre.CreateDate = DateTime.Now;
                 customre.UpdateDate = DateTime.Now;
-                _repository.Add(customre);
+                var result = _repository.Add(customre);
+                switch (result)
+                {
+                    case ReturnRepository.Success:
+                        return CreateResult.Success;
+                    case ReturnRepository.Error:
+                        return CreateResult.Error;
+                    case ReturnRepository.NullReference:
+                        return CreateResult.NullReference;
+                }
+
                 return CreateResult.Success;
             }
             catch (Exception e)
@@ -46,7 +57,6 @@ namespace ApplicationService.Services.Implementation
                 //Log Exception
                 return CreateResult.Error;
             }
-           
         }
 
         public CustomerInfo GetCustomer(int customerId)
@@ -77,7 +87,8 @@ namespace ApplicationService.Services.Implementation
             }
             foreach (var item in customers)
             {
-                var customerInfo = new CustomerInfo();
+                CustomerInfo customerInfo = new();
+                customerInfo.Id = item.Id;
                 customerInfo.FirstName = item.FirstName;
                 customerInfo.LastName = item.LastName;
                 customerInfo.DateOfBirth= item.DateOfBirth;
@@ -101,7 +112,18 @@ namespace ApplicationService.Services.Implementation
                 }
                 customer.UpdateDate = DateTime.Now;
                 customer.IsDeleted = true;
-                _repository.Update(customer);
+                var result = _repository.Update(customer);
+                switch (result)
+                {
+                    case ReturnRepository.Success:
+                        return RemoveResult.Success;
+                    case ReturnRepository.Error:
+                        return RemoveResult.Error;
+                    case ReturnRepository.NullReference:
+                        return RemoveResult.NullReference;
+                    case ReturnRepository.NotFound:
+                        return RemoveResult.NotFound;
+                }
                 return RemoveResult.Success;
             }
             catch (Exception exp)
@@ -128,7 +150,18 @@ namespace ApplicationService.Services.Implementation
                 customer.FirstName = customerUpdate.FirstName;
                 customer.LastName = customerUpdate.LastName;
                 customer.DateOfBirth = customerUpdate.DateOfBirth;
-                _repository.Update(customer);
+                var result = _repository.Update(customer);
+                switch (result)
+                {
+                    case ReturnRepository.Success:
+                        return UpdateResult.Success;
+                    case ReturnRepository.Error:
+                        return UpdateResult.Error;
+                    case ReturnRepository.NullReference:
+                        return UpdateResult.NullReference;
+                    case ReturnRepository.NotFound:
+                        return UpdateResult.NotFound;
+                }
                 return UpdateResult.Success;
             }
             catch (Exception exp)
